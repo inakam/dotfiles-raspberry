@@ -1,0 +1,14 @@
+#!/bin/bash
+
+{{ if eq .chezmoi.os "darwin" }}
+
+# moonbitのインストール
+curl -fsSL https://cli.moonbitlang.com/install/unix.sh | bash
+
+# Rustのインストール
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+
+# cargo-lambdaのインストール
+cargo install cargo-lambda
+
+{{ end }}
