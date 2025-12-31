@@ -24,7 +24,7 @@ fi
 # Brewfileの場所を指定してbundle実行
 # --cleanup: Brewfileに記述のないアプリをアンインストール（完全同期）
 # --no-lock: Lockファイルを生成しない
-brew bundle install --file="$HOME/.config/homebrew/Brewfile" --cleanup --no-lock
+brew bundle install --file="$HOME/.config/homebrew/Brewfile" --cleanup
 
 echo "✅ Homebrew packages are in sync."
 {{- end -}}
