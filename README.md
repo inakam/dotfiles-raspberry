@@ -14,6 +14,8 @@ chezmoi init --apply inakam
 
 3. 「Import Settings & Data」でバックアップされた .rayconfig を読み込む
 
+4. Obsidian Extensionをインストール
+
 # Obsidianの設定
 
 コミュニティプラグインを追加する
