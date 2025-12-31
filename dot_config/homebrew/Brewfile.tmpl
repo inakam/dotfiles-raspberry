@@ -68,6 +68,7 @@ cask "raycast"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "xcodes-app"
 cask "gcloud-cli"
 cask "codex"
+cask "obsidian"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 
 # === 仕事専用 cask ===
 {{ if .is_work -}}

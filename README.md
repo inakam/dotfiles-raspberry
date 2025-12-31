@@ -14,6 +14,12 @@ chezmoi init --apply inakam
 
 3. 「Import Settings & Data」でバックアップされた .rayconfig を読み込む
 
+# Obsidianの設定
+
+コミュニティプラグインを追加する
+- Thino
+- Advanced URI
+
 # 設定の変更
 
 ```
