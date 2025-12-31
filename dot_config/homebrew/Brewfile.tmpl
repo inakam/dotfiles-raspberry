@@ -63,10 +63,10 @@ brew "ruff"
 {{ end -}}
 
 # === 共通 cask ===
-cask "aqua-voice"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
-cask "cursor"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
+cask "aqua-voice"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
+cask "cursor"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "flutter"
-cask "raycast"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
+cask "raycast"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "xcodes-app"
 cask "gcloud-cli"
 
