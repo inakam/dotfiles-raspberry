@@ -65,7 +65,7 @@ cask "aqua-voice"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "cursor"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "flutter"
 cask "raycast"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
-cask "xcodes-app"
+cask "xcodes-app"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "gcloud-cli"
 cask "codex"
 cask "obsidian"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
