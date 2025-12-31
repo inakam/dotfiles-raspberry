@@ -1,29 +1,90 @@
+# === 共通 tap ===
 tap "cargo-lambda/cargo-lambda"
+tap "homebrew/services"
 tap "inakam/tap"
 tap "withgraphite/tap"
+tap "kitagry/tap"
+
+# === 仕事専用 tap ===
+{{ if .is_work -}}
+{{ end -}}
+
+# === 共通 brew ===
 brew "aria2"
 brew "awscli"
 brew "chezmoi"
 brew "cloudflared", restart_service: :changed
+brew "cmake"
 brew "cocoapods"
 brew "codex"
 brew "ffmpeg"
+brew "gcc"
 brew "gh"
+brew "imagemagick"
+brew "jq"
+brew "kitagry/tap/kj"
+brew "libxml2"
 brew "llvm"
 brew "mise"
 brew "neovim"
+brew "openssl@3"
 brew "pnpm"
 brew "rbenv"
 brew "uv"
 brew "xcodes"
+brew "xz"
 brew "yt-dlp"
 brew "zig"
+brew "zlib"
 brew "cargo-lambda/cargo-lambda/cargo-lambda"
 brew "inakam/tap/codicat"
 brew "withgraphite/tap/graphite"
+
+# === 仕事専用 brew ===
+{{ if .is_work -}}
+brew "git"
+brew "git-lfs"
+brew "cruft"
+brew "berglas"
+brew "cloud-sql-proxy"
+brew "colima", restart_service: :changed
+brew "docker"
+brew "docker-compose"
+brew "glab"
+brew "golangci-lint"
+brew "kubectx"
+brew "lima"
+brew "mecab"
+brew "mecab-ipadic"
+brew "mypy"
+brew "postgresql"
+brew "pyenv"
+brew "ruff"
+{{ end -}}
+
+# === 共通 cask ===
+cask "aqua-voice"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
+cask "cursor"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
 cask "flutter"
+cask "raycast"{{ if .is_work -}}, args: { appdir: "~/Applications" }{{ end -}}
 cask "xcodes-app"
-cask "raycast"
+cask "gcloud-cli"
+
+# === 仕事専用 cask ===
+{{ if .is_work -}}
+{{ end -}}
+
+# === 共通 go ===
 go "golang.org/x/tools/gopls"
 go "honnef.co/go/tools/cmd/staticcheck"
+
+# === 仕事専用 go ===
+{{ if .is_work -}}
+go "github.com/golangci/golangci-lint/v2/cmd/golangci-lint"
+go "github.com/po3rin/eskeeper/cmd/eskeeper"
+go "goa.design/goa/v3/cmd/goa"
+{{ end -}}
+
+# === 共通 cargo ===
 cargo "cargo-update"
+cargo "cargo-lambda"
