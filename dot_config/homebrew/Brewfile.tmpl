@@ -16,7 +16,6 @@ brew "chezmoi"
 brew "cloudflared", restart_service: :changed
 brew "cmake"
 brew "cocoapods"
-brew "codex"
 brew "ffmpeg"
 brew "gcc"
 brew "gh"
@@ -69,6 +68,7 @@ cask "flutter"
 cask "raycast"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "xcodes-app"
 cask "gcloud-cli"
+cask "codex"
 
 # === 仕事専用 cask ===
 {{ if .is_work -}}
