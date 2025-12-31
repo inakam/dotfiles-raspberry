@@ -1,0 +1,11 @@
+[data]
+    # プロンプトを表示して変数を決定（一度設定すると保存される）
+    {{- $is_work := promptBoolOnce. "is_work" "Is this a work machine" -}}
+    is_work = {{ $is_work }}
+
+    # OS情報の自動取得
+    osid = {{.chezmoi.os | quote }}
+
+[git]
+    autoCommit = true
+    autoPush = true

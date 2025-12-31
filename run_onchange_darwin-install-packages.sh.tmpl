@@ -1,0 +1,30 @@
+{{ if eq.chezmoi.os "darwin" -}}
+#!/bin/bash
+
+# Brewfileのハッシュ値をコメントとして埋め込む
+# これにより、Brewfileのテンプレート展開結果が変わると、このスクリプトのハッシュも変わり、実行される
+# Brewfile hash: {{ include "dot_config/homebrew/Brewfile.tmpl" | sha256sum }}
+
+set -eufo pipefail
+
+echo "🍺 Homebrew Bundle Update Detected..."
+
+# Homebrew自体のインストールチェック
+if! command -v brew &> /dev/null; then
+    echo "   Homebrew not found. Installing..."
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    
+    # Apple Siliconパス設定
+    if [[ "$(uname -m)" == "arm64" ]]; then
+        echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
+        eval "$(/opt/homebrew/bin/brew shellenv)"
+    fi
+fi
+
+# Brewfileの場所を指定してbundle実行
+# --cleanup: Brewfileに記述のないアプリをアンインストール（完全同期）
+# --no-lock: Lockファイルを生成しない
+brew bundle install --file="$HOME/.config/homebrew/Brewfile" --cleanup --no-lock
+
+echo "✅ Homebrew packages are in sync."
+{{ end -}}
