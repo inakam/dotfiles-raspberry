@@ -1,0 +1,14 @@
+
+. "$HOME/.local/bin/env"
+. "$HOME/.cargo/env"
+
+[[ -d ~/.rbenv  ]] && \
+  export PATH=${HOME}/.rbenv/bin:${PATH} && \
+  eval "$(rbenv init -)"
+
+alias vi="nvim"
+alias vim="nvim"
+alias view="nvim -R"
+
+# moonbit
+export PATH="$HOME/.moon/bin:$PATH"
