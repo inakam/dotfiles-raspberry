@@ -17,6 +17,4 @@ alias cdiff="chezmoi diff"
 # moonbit
 export PATH="$HOME/.moon/bin:$PATH"
 
-eval "$($(which mise) activate zsh)" # miseの有効化
-
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
