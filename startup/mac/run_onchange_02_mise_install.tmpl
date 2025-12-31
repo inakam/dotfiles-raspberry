@@ -1,5 +1,6 @@
-{{ if eq .chezmoi.os "darwin" }}
 #!/bin/bash
+
+{{ if eq .chezmoi.os "darwin" }}
 
 # mise config.tomlのハッシュ値をコメントとして埋め込む
 # これにより、mise config.tomlのテンプレート展開結果が変わると、このスクリプトのハッシュも変わり、実行される
