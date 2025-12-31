@@ -14,3 +14,5 @@ alias view="nvim -R"
 export PATH="$HOME/.moon/bin:$PATH"
 
 eval "$($(which mise) activate zsh)" # miseの有効化
+
+source ~/.zshrc.local

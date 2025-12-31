@@ -2,6 +2,8 @@
 
 ```
 sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply inakam
+# もしくは
+chezmoi init --apply inakam
 ```
 
 ## Raycastの手動設定（初回のみ）:
