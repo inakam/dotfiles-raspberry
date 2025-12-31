@@ -1,0 +1,12 @@
+{{ if eq .chezmoi.os "darwin" }}
+#!/bin/bash
+
+# mise config.tomlのハッシュ値をコメントとして埋め込む
+# これにより、mise config.tomlのテンプレート展開結果が変わると、このスクリプトのハッシュも変わり、実行される
+# mise config.toml hash: {{ include "dot_config/mise/config.toml" | sha256sum }}
+
+set -eufo pipefail
+
+mise install
+
+{{ end }}
