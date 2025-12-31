@@ -19,3 +19,10 @@ chezmoi edit ~/.zshrc
 chezmoi diff
 chezmoi apply
 ```
+
+# Gitからの反映
+
+```
+chezmoi git pull
+chezmoi apply
+```
