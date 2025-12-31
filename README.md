@@ -13,8 +13,7 @@ chezmoi init --apply inakam
 2. Script Commandsの設定で ~/.config/raycast/scripts を読み込む
 
 3. 「Import Settings & Data」でバックアップされた .rayconfig を読み込む
-
-4. Obsidian Extensionをインストール
+  - もしExportするときは「Settings」「Extensions」「ScriptDirectories」「Snippets」だけをExport（aaaaaaaa）
 
 # Obsidianの設定
 
