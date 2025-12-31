@@ -19,4 +19,4 @@ export PATH="$HOME/.moon/bin:$PATH"
 
 eval "$($(which mise) activate zsh)" # miseの有効化
 
-source ~/.zshrc.local
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
