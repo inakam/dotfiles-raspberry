@@ -1,152 +1,233 @@
 ---
-name: gokart-guide
-description: gokart（luigi上に構築されたMLパイプラインフレームワーク）の開発支援スキル。gokartを使ったタスク・パイプラインの実装、デバッグ、テスト作成を支援する。「gokartでタスクを作成」「gokartパイプラインを実装」「gokartのエラーを解決」「gokartタスクのテストを書く」「gokart mypyエラー」などのリクエスト時に使用する。
+name: gokart
+description: M3社が開発したPythonの機械学習パイプラインツールgokartに関する深い知識とベストプラクティスを提供する。Use when reviewing gokart task designs, implementing type-safe ML pipelines, writing gokart tests, or working with gokart and Pandera integration. Trigger when user mentions gokart, TaskOnKart, TaskInstanceParameter, Pandera DataFrames with gokart, or requests code review for ML pipeline tasks.
 ---
 
-# gokart Guide
+# gokart
 
-gokartを使ったMLパイプライン開発を支援するスキル。
+## Overview
+
+This skill provides comprehensive guidance for gokart, M3's machine learning pipeline library. It focuses on type-safe task design, Pandera integration, and testing best practices to enable effective design reviews and implementation.
+
+## Core Principles
+
+gokart development follows these principles:
+
+1. **Type Safety First**: Always use generic type annotations (`TaskOnKart[T]`) and typed parameters
+2. **Pandera for DataFrames**: Use `DataFrame[Schema]` instead of `pd.DataFrame` for better type safety
+3. **Instance-based Loading**: Load with task instances (`self.load(self.task)`), not string keys
+4. **Minimal Mocking in Tests**: Only mock external dependencies (APIs, databases)
 
 ## Quick Reference
 
-**重要**: 必ず `gokart.TaskOnKart[T]` と型パラメータを指定すること（mypyで型チェックを行うため）
+### Type-Safe Task Pattern
 
 ```python
 import gokart
-import luigi
-import pandas as pd
-from pandera.typing import DataFrame
+import pandera.pandas as pa
+from pandera.typing.pandas import DataFrame, Series
 
-# 基本タスク（型パラメータ必須）
-class MyTask(gokart.TaskOnKart[str]):
-    def run(self):
-        self.dump('result')
+class InputSchema(pa.DataFrameModel):
+    user_id: Series[int] = pa.Field(gt=0)
+    score: Series[float]
 
-# 依存関係付きタスク
-class ProcessTask(gokart.TaskOnKart[pd.DataFrame]):
-    input_task: gokart.TaskOnKart[pd.DataFrame] = gokart.TaskInstanceParameter()
+class OutputSchema(InputSchema):
+    grade: Series[str]
 
-    def run(self):
-        data = self.load(self.input_task)
-        self.dump(data.dropna())
-
-# 実行
-result = gokart.build(ProcessTask(input_task=LoadTask()))
-```
-
-### ⚠️ 非推奨パターン
-
-| パターン                    | 理由                  | 代替案                          |
-| --------------------------- | --------------------- | ------------------------------- |
-| `rerun=True`                | pylint_gokartで警告   | `_cache_key_datetime`パラメータ |
-| `yield`による動的タスク生成 | run()が毎回リスタート | `requires()`で静的に構築        |
-
-## Reference Guide
-
-| 用途                       | 参照先                                            |
-| -------------------------- | ------------------------------------------------- |
-| **パターン・テンプレート** | [patterns.md](references/patterns.md)             |
-| **API詳細**                | [api-reference.md](references/api-reference.md)   |
-| **ベストプラクティス**     | [best-practices.md](references/best-practices.md) |
-| **テスト作成**             | [testing.md](references/testing.md)               |
-
-## Core Concepts
-
-### TaskOnKart
-
-- `gokart.TaskOnKart[T]` - 型付きタスク（`T`は出力型、**必須**）
-- `run()` - タスクロジック実装、`self.dump()`で保存
-- `load()` - 依存タスクの出力を読み込み
-- `dump()` - 結果を保存
-
-### Parameters
-
-| パラメータ                           | 用途               |
-| ------------------------------------ | ------------------ |
-| `luigi.Parameter()`                  | 文字列             |
-| `luigi.IntParameter()`               | 整数               |
-| `luigi.DateParameter()`              | 日付               |
-| `gokart.TaskInstanceParameter()`     | タスク依存関係     |
-| `gokart.ListTaskInstanceParameter()` | 複数タスク依存関係 |
-| `gokart.SerializableParameter()`     | Pydanticモデル等   |
-
-### Execution
-
-- `gokart.build(task)` - Jupyter/インラインコード用
-- `gokart.run()` - CLI用（`python main.py TaskName --local-scheduler`）
-
-## Key Patterns（概要）
-
-詳細は [patterns.md](references/patterns.md) を参照。
-
-### Pipelineパターン（推奨）
-
-`requires()`内でタスクインスタンスを渡し、`run()`内で`load()`して結果を取得。
-
-```
-Pipeline.requires()内での構築:
-  DownloadA() ─┐
-               ├─→ JoinAB(a=downloadA, b=downloadB) ─→ ProcessC(input=joinAB)
-  DownloadB() ─┘
-
-実行時:
-  1. DownloadA.run() → 結果をキャッシュ
-  2. DownloadB.run() → 結果をキャッシュ
-  3. JoinAB.run() → self.load(self.a), self.load(self.b) でA,Bの結果を取得
-```
-
-### 2段階gokart.build()パターン
-
-依存タスクの結果に基づいてタスク数を動的に決めたい場合は、**2回のgokart.build()**を使う。
-
-```python
-# 1回目: データ取得（件数確定）
-data = gokart.build(DownloadData(...))
-
-# Pythonで動的にタスク生成
-tasks = [ProcessItem(item=item) for item in data]
-
-# 2回目: 動的タスクを実行
-result = gokart.build(ConcatResults(tasks=tasks), workers=50)
-```
-
-### API呼び出し分解パターン
-
-外部APIコールを1リクエスト1タスクに分解し、途中再開を可能にする。
-
-```python
-class TagText(gokart.TaskOnKart[dict]):
-    text: str = luigi.Parameter()
-    model: str = luigi.Parameter(significant=False)  # キャッシュキーから除外
-
-class TagTexts(gokart.TaskOnKart[dict[str, dict]]):
-    texts: Tuple[str, ...] = luigi.TupleParameter()
+class ProcessTask(gokart.TaskOnKart[DataFrame[OutputSchema]]):
+    source: gokart.TaskOnKart[DataFrame[InputSchema]] = gokart.TaskInstanceParameter()
 
     def requires(self):
-        return {text: TagText(text=text, model='gpt-4o') for text in self.texts}
+        return self.source
+
+    def run(self):
+        df = self.load(self.source)  # Type-safe: DataFrame[InputSchema]
+        result = self._add_grades(df)
+        self.dump(result)
+
+    def _add_grades(self, df: DataFrame[InputSchema]) -> DataFrame[OutputSchema]:
+        return DataFrame[OutputSchema](
+            df.assign(grade=lambda x: x['score'].apply(
+                lambda s: 'A' if s >= 90 else 'B'
+            ))
+        )
 ```
 
-## Debugging
+### Testing Pattern
 
 ```python
-# ログ出力
-gokart.build(task, log_level=logging.DEBUG)
+from gokart.testing import test_run
 
-# タスクツリー確認
-print(gokart.make_tree_info(task))
+class TestDataTask(gokart.TaskOnKart[DataFrame[InputSchema]]):
+    def run(self):
+        df = pd.DataFrame({'user_id': [1, 2], 'score': [95.0, 85.0]})
+        self.dump(DataFrame[InputSchema](df))
 
-# キャッシュ無効化（rerun=Trueの代替）
-class MyTask(gokart.TaskOnKart[pd.DataFrame]):
-    _cache_key_datetime: datetime = luigi.DateSecondParameter(default=datetime.now())
+def test_process_task():
+    result = test_run(ProcessTask(source=TestDataTask()))
+    assert len(result) == 2
+    assert result['grade'].tolist() == ['A', 'B']
 ```
 
-## pyproject.toml設定
+## Design Review Workflow
 
-```toml
-[tool.mypy]
-plugins = ["pandera.mypy", "gokart.mypy"]
+When reviewing gokart code:
 
-[tool.pylint.MASTER]
-load-plugins = ["pylint_gokart"]
-enable = ["list-parameter-use", "rerun-use"]
+1. **Check Type Safety**
+   - All `TaskOnKart` have generic types
+   - All `TaskInstanceParameter` have type annotations
+   - Load methods use task instances, not strings
+
+2. **Check Pandera Integration**
+   - DataFrames use `DataFrame[Schema]`
+   - Schemas defined with proper validation rules
+   - Output validation performed
+
+3. **Check Task Structure**
+   - Dependencies use property methods when needed
+   - `run()` method is concise
+   - Error handling present
+
+4. **Check Tests**
+   - Tests use `test_run()` or `build()`
+   - Minimal mocking (only external dependencies)
+   - Test data inline, not in fixtures
+
+See [review_checklist.md](references/review_checklist.md) for comprehensive checklist.
+
+## Common Review Points
+
+### ✅ Good Patterns
+
+```python
+# Type-safe with Pandera
+class MyTask(gokart.TaskOnKart[DataFrame[OutputSchema]]):
+    source: gokart.TaskOnKart[DataFrame[InputSchema]] = gokart.TaskInstanceParameter()
+
+    def requires(self):
+        return self.source
+
+    def run(self):
+        data = self.load(self.source)  # Type-safe
+        self.dump(self._process(data))
+
+    def _process(self, df: DataFrame[InputSchema]) -> DataFrame[OutputSchema]:
+        ...
+```
+
+### ❌ Anti-Patterns to Avoid
+
+```python
+# Missing types
+class MyTask(gokart.TaskOnKart):  # ❌ No generic type
+    source = gokart.TaskInstanceParameter()  # ❌ No type annotation
+
+    def requires(self):
+        return dict(source=self.source)
+
+    def run(self):
+        data = self.load('source')  # ❌ String key, not instance
+        df = self.load_data_frame()  # ❌ Deprecated method
+        self.dump(data)
+```
+
+### Property-Based Dependencies
+
+When instantiating tasks in `requires()`, use property methods:
+
+```python
+class MyTask(gokart.TaskOnKart[int]):
+    date: str = luigi.Parameter()
+
+    def requires(self):
+        return self.data_task  # ✅ Use property
+
+    def run(self):
+        data = self.load(self.data_task)  # ✅ Type-safe
+        self.dump(data * 2)
+
+    @property
+    def data_task(self) -> DataTask:
+        return DataTask(date=self.date)
+```
+
+## Detailed Resources
+
+For in-depth information, see these reference files:
+
+### [best_practices.md](references/best_practices.md)
+Comprehensive guide covering:
+- Type safety guidelines
+- Task design patterns
+- Common anti-patterns
+- Pandera integration patterns
+
+**When to read**: Implementing new tasks, refactoring existing code, or need detailed pattern examples.
+
+### [testing.md](references/testing.md)
+Testing guidelines covering:
+- Testing philosophy (minimal mocking)
+- Basic task testing
+- Testing with dependencies
+- Testing with Pandera
+- Common testing patterns
+
+**When to read**: Writing tests for gokart tasks, setting up test infrastructure, or debugging test issues.
+
+### [review_checklist.md](references/review_checklist.md)
+Systematic checklist for design reviews covering:
+- Type safety review points
+- Task structure review
+- Pandera integration review
+- Code quality review
+- Common anti-patterns
+
+**When to read**: Conducting code reviews, self-reviewing before PR, or need structured review guidance.
+
+## Key Review Questions
+
+Use these questions to guide reviews:
+
+1. **Type Safety**
+   - Does every `TaskOnKart` have a generic type?
+   - Are all `TaskInstanceParameter` type-annotated?
+   - Is `self.load()` called with task instances?
+
+2. **Pandera**
+   - Are DataFrames typed as `DataFrame[Schema]`?
+   - Are schemas defined with validation rules?
+   - Is output validation performed?
+
+3. **Structure**
+   - Are dependencies clear and well-organized?
+   - Is complex logic extracted to methods?
+   - Are property methods used for dynamic dependencies?
+
+4. **Tests**
+   - Do tests use `test_run()` or `build()`?
+   - Is mocking minimized?
+   - Is test data inline with assertions?
+
+## Example Review Comment
+
+When reviewing code, provide structured feedback:
+
+```markdown
+## Type Safety Issues
+
+1. ❌ `TaskA` missing generic type annotation
+   - Change `class TaskA(gokart.TaskOnKart):`
+   - To `class TaskA(gokart.TaskOnKart[DataFrame[OutputSchema]]):`
+
+2. ❌ String-based loading in `TaskB.run()`
+   - Change `data = self.load('source')`
+   - To `data = self.load(self.source)`
+
+3. ✅ Good use of Pandera schemas in `TaskC`
+
+## Suggestions
+
+- Consider extracting the complex transformation logic in `TaskA.run()`
+  to a private `_transform()` method
+- Add validation for empty DataFrames in `TaskB`
 ```
