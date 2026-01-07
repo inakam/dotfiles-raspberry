@@ -21,6 +21,8 @@ if ! command -v brew &> /dev/null; then
     fi
 fi
 
+# 禁止するパッケージを設定(miseで管理するため)
+export HOMEBREW_FORBIDDEN_FORMULAE="node python python3 pip npm pnpm yarn claude"
 # Brewfileの場所を指定してbundle実行
 # --cleanup: Brewfileに記述のないアプリをアンインストール（完全同期）
 # --no-lock: Lockファイルを生成しない
