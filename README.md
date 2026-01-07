@@ -29,6 +29,7 @@ chezmoi init --apply inakam
 /plugin marketplace add thedotmack/claude-mem
 /plugin marketplace add fumiya-kume/claude-code
 /plugin marketplace add OthmanAdi/planning-with-files
+/plugin marketplace add anthropics/skills
 ```
 
 # 設定の変更
