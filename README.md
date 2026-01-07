@@ -9,9 +9,7 @@ chezmoi init --apply inakam
 ## Raycastの手動設定（初回のみ）:
 
 1. Raycastを起動（Brewでインストールされている）
-
 2. Script Commandsの設定で ~/.config/raycast/scripts を読み込む
-
 3. 「Import Settings & Data」でバックアップされた .rayconfig を読み込む
   - もしExportするときは「Settings」「Extensions」「ScriptDirectories」「Snippets」だけをExport（aaaaaaaa）
 
@@ -20,6 +18,14 @@ chezmoi init --apply inakam
 コミュニティプラグインを追加する
 - Thino
 - Advanced URI
+
+# Claude Code Plugin
+
+- claude codeの中でpluginsをインストールする
+```
+/plugin marketplace add thedotmack/claude-mem
+/plugin install claude-mem
+```
 
 # 設定の変更
 
@@ -35,3 +41,4 @@ chezmoi apply
 chezmoi git pull
 chezmoi apply
 ```
+
