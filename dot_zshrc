@@ -19,3 +19,5 @@ alias cdiff="chezmoi diff"
 export PATH="$HOME/.moon/bin:$PATH"
 
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
+
+eval "$(mise activate zsh)"
