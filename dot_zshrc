@@ -18,6 +18,13 @@ alias cdiff="chezmoi diff"
 # moonbit
 export PATH="$HOME/.moon/bin:$PATH"
 
+# ~/.zshrc.d/ 配下のファイルを読み込み
+if [ -d ~/.zshrc.d ]; then
+  for file in ~/.zshrc.d/*.zsh(N); do
+    source "$file"
+  done
+fi
+
 [ -f ~/.zshrc.local ] && source ~/.zshrc.local
 
 eval "$(mise activate zsh)"
