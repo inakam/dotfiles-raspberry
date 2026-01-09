@@ -1,16 +1,16 @@
 ---
 name: deep-work
-description: 長時間・複雑なタスクを自律的に進めるためのスキル。Ralph Loopによる反復実行とファイルベースの計画管理を組み合わせる。「大規模な機能を実装して」「このプロジェクトをリファクタリングして」「調査してまとめて」「長時間タスクを開始」「deep workモードで」などのリクエスト時に使用する。
+description: 長時間・複雑なタスクを自律的に進めるためのスキル。Ralph Loopによる反復実行とplanning-with-filesプラグインのファイルベース計画管理を組み合わせる。「大規模な機能を実装して」「このプロジェクトをリファクタリングして」「調査してまとめて」「長時間タスクを開始」「deep workモードで」などのリクエスト時に使用する。
 ---
 
 # Deep Work
 
-Ralph Loop + ファイルベース計画で長時間タスクを自律実行する。
+Ralph Loop + planning-with-files で長時間タスクを自律実行する。
 
 ## クイックスタート
 
 1. ユーザーにタスク内容・完了条件を確認
-2. `task_plan.md` を作成
+2. `/planning-with-files` で計画ファイルを初期化
 3. Ralph Loop を起動
 
 ## ワークフロー
@@ -23,47 +23,15 @@ AskUserQuestionで以下を確認:
 - 完了条件（テストが通る、ファイルが生成される等）
 - 最大イテレーション数（デフォルト: 30）
 
-### Step 2: 計画ファイル作成
+### Step 2: 計画ファイル初期化
 
-作業ディレクトリに以下を作成:
+`/planning-with-files` スキルを呼び出して3ファイルを作成:
 
-**task_plan.md**（必須）:
-
-```markdown
-# Task Plan: [タスク名]
-
-## Goal
-
-[最終的に達成したい状態を1文で]
-
-## Completion Criteria
-
-- [ ] [完了条件1]
-- [ ] [完了条件2]
-- [ ] [完了条件3]
-
-## Phases
-
-- [ ] Phase 1: 調査・設計
-- [ ] Phase 2: 実装
-- [ ] Phase 3: テスト・検証
-- [ ] Phase 4: 完了確認
-
-## Status
-
-**Phase 1進行中** - [現在の作業内容]
-
-## Decisions
-
-- [決定事項]: [理由]
-
-## Errors Encountered
-
-- [エラー]: [解決方法]
-```
-
-**notes.md**（任意）:
-調査結果や発見事項を蓄積するファイル。
+| File           | Purpose                      |
+| -------------- | ---------------------------- |
+| `task_plan.md` | フェーズ管理、進捗、決定事項 |
+| `findings.md`  | 調査結果、発見事項           |
+| `progress.md`  | セッションログ、テスト結果   |
 
 ### Step 3: Ralph Loop 起動
 
@@ -73,16 +41,17 @@ AskUserQuestionで以下を確認:
 ## 作業手順
 1. task_plan.md を読んで現在の状態を把握
 2. 次のPhaseを実行
-3. task_plan.md を更新（進捗・エラー記録）
-4. 完了条件をすべて満たしたら <promise>DONE</promise> を出力
+3. task_plan.md, progress.md を更新（進捗・エラー記録）
+4. 発見事項は findings.md に記録
+5. 完了条件をすべて満たしたら <promise>DONE</promise> を出力
 
 ## 完了条件
 [具体的な完了条件をリスト]
 
-## 注意事項
-- 各Phase完了後に必ず task_plan.md を更新
-- エラーは Errors Encountered に記録
-- 15イテレーション経過で未完了なら状況を notes.md に記録して続行
+## 重要ルール
+- 2アクションルール: 2回の操作ごとに必ず発見事項をファイルに保存
+- 3ストライクルール: 同じエラーで3回失敗したらユーザーに相談
+- 同じ失敗アクションを繰り返さない
 " --max-iterations 30 --completion-promise "DONE"
 ```
 
@@ -96,7 +65,7 @@ AskUserQuestionで以下を確認:
 ## 作業手順
 1. task_plan.md を読む
 2. 次のPhaseを実行（設計→実装→テスト）
-3. task_plan.md を更新
+3. task_plan.md, progress.md を更新
 4. すべてのテストが通ったら <promise>DONE</promise>
 
 ## 完了条件
@@ -114,9 +83,9 @@ AskUserQuestionで以下を確認:
 
 ## 作業手順
 1. task_plan.md を読む
-2. 対象ファイルを分析してnotes.mdに記録
+2. 対象ファイルを分析してfindings.mdに記録
 3. リファクタリングを実施
-4. テストを実行して確認
+4. テストを実行してprogress.mdに結果を記録
 5. task_plan.md を更新
 6. すべてのテストがパスしたら <promise>DONE</promise>
 
@@ -134,47 +103,48 @@ AskUserQuestionで以下を確認:
 
 ## 作業手順
 1. task_plan.md を読む
-2. 各ソースを調査してnotes.mdに記録
+2. 各ソースを調査してfindings.mdに記録（2アクションルール厳守）
 3. 調査完了後、report.md にまとめる
-4. task_plan.md を更新
+4. progress.md に進捗を記録
 5. レポートが完成したら <promise>DONE</promise>
 
 ## 完了条件
 - 3つ以上のソースを調査
-- notes.md に調査結果を記録
+- findings.md に調査結果を記録
 - report.md に結論・推奨事項を記載
 " --max-iterations 20 --completion-promise "DONE"
 ```
 
-## ループ中のルール
+## planning-with-files の重要ルール
 
-### 毎イテレーション開始時
+### 2アクションルール
 
-```
-Read task_plan.md  # 現状把握
-```
+> 2回のview/browser/search操作ごとに、必ず発見事項をファイルに保存
 
-### Phase完了時
+視覚情報・マルチモーダル情報はすぐに失われるため。
 
-```
-Edit task_plan.md  # [x]マーク、Status更新
-```
-
-### エラー発生時
+### 3ストライクエラープロトコル
 
 ```
-Edit task_plan.md  # Errors Encounteredに記録
+ATTEMPT 1: 診断して修正
+ATTEMPT 2: 別のアプローチを試す（同じ失敗を繰り返さない）
+ATTEMPT 3: 前提を疑い、計画を見直す
+3回失敗後: ユーザーに相談
 ```
 
-### 情報蓄積時
+### 5つの質問テスト
 
-```
-Write/Edit notes.md  # 調査結果・発見を保存
-```
+以下に答えられれば状態管理は正常:
+
+| 質問           | 回答元                      |
+| -------------- | --------------------------- |
+| 今どこにいる？ | task_plan.md の現在フェーズ |
+| どこへ向かう？ | 残りのフェーズ              |
+| ゴールは？     | task_plan.md のGoal         |
+| 何を学んだ？   | findings.md                 |
+| 何をした？     | progress.md                 |
 
 ## キャンセル方法
-
-ループを中断する場合:
 
 ```bash
 /cancel-ralph
@@ -182,10 +152,10 @@ Write/Edit notes.md  # 調査結果・発見を保存
 
 ## アンチパターン
 
-| NG                         | OK                       |
-| -------------------------- | ------------------------ |
-| 完了条件が曖昧             | 具体的・検証可能な条件   |
-| max-iterations未設定       | 適切な上限を設定         |
-| task_plan.md未更新         | 毎Phase更新              |
-| エラー無視                 | Errors Encounteredに記録 |
-| コンテキストに情報詰め込み | ファイルに保存           |
+| NG                         | OK                     |
+| -------------------------- | ---------------------- |
+| 完了条件が曖昧             | 具体的・検証可能な条件 |
+| max-iterations未設定       | 適切な上限を設定       |
+| ファイル更新を忘れる       | 2アクションルール厳守  |
+| 同じエラーで何度もリトライ | 3ストライクルール      |
+| コンテキストに情報詰め込み | ファイルに保存         |
