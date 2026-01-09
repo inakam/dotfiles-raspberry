@@ -11,9 +11,9 @@ description: 長時間・複雑なタスクを自律的に実行するスキル�
 ## ワークフロー
 
 ```
-1. /dig          → タスクの要件・完了条件を明確化
-2. /planning-with-files → 計画ファイルを初期化
-3. /ralph-loop   → 自律的に実行
+1. /dig            → タスクの要件・完了条件を明確化
+2. /ralph-loop     → 自律的に実行
+3. /code-simplifier → コードの場合、簡素化（オプション）
 ```
 
 ## 実行手順
@@ -43,9 +43,12 @@ planning-with-files を利用して作業進捗を管理する
 " --max-iterations 30 --completion-promise "DONE"
 ```
 
+### Step 3: コード簡素化（オプション）
+
+コードを書くタスクの場合、`/code-simplifier` を実行して簡素化する。
+
 ## キャンセル
 
 ```
 /cancel-ralph
 ```
-
