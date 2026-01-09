@@ -1,8 +1,7 @@
 ---
-
-## name: deep-work
-
-description: 長時間・複雑なタスクを自律的に実行するスキル。「大規模な機能実装」「deep workモードで」などのリクエスト時に使用する。dig→planning-with-files→ralph-loopの順でプラグインを実行する。
+name: deep-work
+description: 長時間・複雑なタスクを自律的に実行するスキル。「大規模な機能実装」「deep workモードで」などのリクエスト時に使用する。dig→planning-with-files→ralph-loopの順にプラグインを組み合わせて実行する。
+---
 
 # Deep Work
 
