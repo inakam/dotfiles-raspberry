@@ -28,7 +28,7 @@ chezmoi init --apply inakam
 ```
 /plugin marketplace add thedotmack/claude-mem
 /plugin marketplace add fumiya-kume/claude-code
-/plugin install claude-mem
+/plugin marketplace add OthmanAdi/planning-with-files
 ```
 
 # 設定の変更
@@ -45,3 +45,4 @@ chezmoi apply
 chezmoi git pull
 chezmoi apply
 ```
+
