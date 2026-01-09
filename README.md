@@ -11,19 +11,23 @@ chezmoi init --apply inakam
 1. Raycastを起動（Brewでインストールされている）
 2. Script Commandsの設定で ~/.config/raycast/scripts を読み込む
 3. 「Import Settings & Data」でバックアップされた .rayconfig を読み込む
-  - もしExportするときは「Settings」「Extensions」「ScriptDirectories」「Snippets」だけをExport（aaaaaaaa）
+
+- もしExportするときは「Settings」「Extensions」「ScriptDirectories」「Snippets」だけをExport（aaaaaaaa）
 
 # Obsidianの設定
 
 コミュニティプラグインを追加する
+
 - Thino
 - Advanced URI
 
 # Claude Code Plugin
 
 - claude codeの中でpluginsをインストールする
+
 ```
 /plugin marketplace add thedotmack/claude-mem
+/plugin marketplace add fumiya-kume/claude-code
 /plugin install claude-mem
 ```
 
@@ -41,4 +45,3 @@ chezmoi apply
 chezmoi git pull
 chezmoi apply
 ```
-
