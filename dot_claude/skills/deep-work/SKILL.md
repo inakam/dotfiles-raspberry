@@ -2,7 +2,7 @@
 
 ## name: deep-work
 
-description: 長時間・複雑なタスクを自律的に実行するスキル。「大規模な機能実装」「リファクタリング」「調査・分析」「deep workモードで」などのリクエスト時に使用する。dig→planning-with-files→ralph-loopの順でプラグインを実行する。
+description: 長時間・複雑なタスクを自律的に実行するスキル。「大規模な機能実装」「deep workモードで」などのリクエスト時に使用する。dig→planning-with-files→ralph-loopの順でプラグインを実行する。
 
 # Deep Work
 
@@ -12,8 +12,7 @@ description: 長時間・複雑なタスクを自律的に実行するスキル�
 
 ```
 1. /dig            → タスクの要件・完了条件を明確化
-2. /ralph-loop     → 自律的に実行
-3. /code-simplifier → コードの場合、簡素化（オプション）
+2. /ralph-loop     → 自律的に実行（コードの場合は簡素化も含む）
 ```
 
 ## 実行手順
@@ -40,15 +39,15 @@ planning-with-files を利用して作業進捗を管理する
 
 ## 完了条件
 [/digで確認した完了条件]
+
+## コード簡素化（コードを書くタスクの場合）
+完了条件を満たしたら /code-simplifier を実行して簡素化する
 " --max-iterations 30 --completion-promise "DONE"
 ```
-
-### Step 3: コード簡素化（オプション）
-
-コードを書くタスクの場合、`/code-simplifier` を実行して簡素化する。
 
 ## キャンセル
 
 ```
 /cancel-ralph
 ```
+
