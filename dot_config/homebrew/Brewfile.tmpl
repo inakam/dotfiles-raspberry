@@ -4,7 +4,6 @@ tap "inakam/tap"
 tap "withgraphite/tap"
 tap "kitagry/tap"
 tap "FelixKratz/formulae"
-tap "nikitabobko/tap"
 
 # === 仕事専用 tap ===
 {{ if .is_work -}}
@@ -77,8 +76,6 @@ cask "gcloud-cli"
 cask "codex"
 cask "obsidian"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "ghostty"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
-cask "nikitabobko/tap/aerospace" {{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
-cask "azooKey" {{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 
 # === 仕事専用 cask ===
 {{ if .is_work -}}
