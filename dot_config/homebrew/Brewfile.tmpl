@@ -28,7 +28,6 @@ brew "llvm"
 brew "mise"
 brew "neovim"
 brew "openssl@3"
-brew "pnpm"
 brew "rbenv"
 brew "uv"
 brew "xcodes"
@@ -43,7 +42,6 @@ brew "starship"
 brew "ghq"
 brew "fzf"
 brew "bat"
-brew "azooKey"
 brew "carapace"
 brew "FelixKratz/formulae/borders"
 
@@ -79,7 +77,8 @@ cask "gcloud-cli"
 cask "codex"
 cask "obsidian"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 cask "ghostty"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
-cask "nikitabobko/tap/aerospace"
+cask "nikitabobko/tap/aerospace" {{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
+cask "azooKey" {{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 
 # === 仕事専用 cask ===
 {{ if .is_work -}}
