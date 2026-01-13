@@ -44,6 +44,10 @@ brew "bat"
 brew "carapace"
 brew "FelixKratz/formulae/borders"
 
+{{ if not .is_work -}}
+brew "1password-cli"
+{{ end -}}
+
 # === 仕事専用 brew ===
 {{ if .is_work -}}
 brew "git"
