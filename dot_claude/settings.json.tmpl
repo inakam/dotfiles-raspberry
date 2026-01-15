@@ -10,6 +10,9 @@
     "ANTHROPIC_VERTEX_PROJECT_ID": "m3staff-aiagent"
     {{- end }}
   },
+  {{ if .is_work -}}
+  "model": "claude-opus-4-5@20251101",
+  {{- end }}
   "includeCoAuthoredBy": false,
   "permissions": {
     "deny": [
@@ -83,7 +86,6 @@
       "Write(/etc/sudoers)"
     ]
   },
-  "model": "claude-opus-4-5@20251101",
   "hooks": {
     "PreToolUse": [
       {
