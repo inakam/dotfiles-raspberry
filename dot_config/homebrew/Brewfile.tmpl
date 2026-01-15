@@ -44,10 +44,6 @@ brew "bat"
 brew "carapace"
 brew "FelixKratz/formulae/borders"
 
-{{ if not .is_work -}}
-brew "1password-cli"
-{{ end -}}
-
 # === 仕事専用 brew ===
 {{ if .is_work -}}
 brew "git"
@@ -83,6 +79,10 @@ cask "ghostty"{{ if .is_work }}, args: { appdir: "~/Applications" }{{ end }}
 
 # === 仕事専用 cask ===
 {{ if .is_work -}}
+{{ end -}}
+
+{{ if not .is_work -}}
+cask "1password-cli"
 {{ end -}}
 
 # === 共通 go ===
