@@ -1,7 +1,18 @@
 {
   "env": {
-    "MAX_THINKING_TOKENS": "31999"
+    "MAX_THINKING_TOKENS": "31999"{{- if not .is_work -}},
+    "ANTHROPIC_AUTH_TOKEN": "{{ onepasswordRead "op://Personal/z.ai API KEY/password" }}",
+    "ANTHROPIC_BASE_URL": "https://api.z.ai/api/anthropic",
+    "API_TIMEOUT_MS": "3000000"
+    {{- else -}},
+    "CLAUDE_CODE_USE_VERTEX": "true",
+    "CLOUD_ML_REGION": "us-east5",
+    "ANTHROPIC_VERTEX_PROJECT_ID": "m3staff-aiagent"
+    {{- end }}
   },
+  {{ if .is_work -}}
+  "model": "claude-opus-4-5@20251101",
+  {{- end }}
   "includeCoAuthoredBy": false,
   "permissions": {
     "deny": [
@@ -106,9 +117,44 @@
           }
         ]
       }
+    ],
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"Claude Codeが許可を求めています\" with title \"Claude Code\" subtitle \"確認待ち\" sound name \"Hero\"'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "osascript -e 'display notification \"タスクが完了しました\" with title \"Claude Code\" subtitle \"処理終了\" sound name \"Hero\"'"
+          }
+        ]
+      }
     ]
   },
   "enabledPlugins": {
+    "example-skills@anthropic-agent-skills": true,
+    "claude-mem@thedotmack": false,
+    "ralph-loop@claude-plugins-official": true,
+    "code-review@claude-plugins-official": true,
+    "dig@kuu-marketplace": true,
+    "code-simplifier@claude-plugins-official": true,
+    "planning-with-files@planning-with-files": true,
+    "gopls-lsp@claude-plugins-official": true,
+    "pyright-lsp@claude-plugins-official": true,
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "typescript-lsp@claude-plugins-official": true,
+    "swift-lsp@claude-plugins-official": true,
+    "kotlin-lsp@claude-plugins-official": true,
     "claude-code-plugins@anthropics/claude-code": true
   },
   "alwaysThinkingEnabled": true,
