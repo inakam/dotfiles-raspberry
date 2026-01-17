@@ -62,7 +62,6 @@ chezmoi init --apply inakam
 - **Node.js**: LTSバージョン
 - **@anthropic-ai/claude-code**: Anthropic AIのCLIツール (v2.1.11)
 - **@openai/codex**: OpenAI Code Explorer (v0.46.0)
-- **task-master-ai**: タスク管理ツール (v0.29.0)
 
 ### エイリアス
 
@@ -80,7 +79,6 @@ chezmoi init --apply inakam
 - `bs`: source ~/.bashrc
 - `cy`: codex --yolo
 - `cur`: cursor-agent
-- `tm`, `taskmaster`: task-master
 - `cl`: claude --dangerously-skip-permissions
 - `clp`: claude --permission-mode plan
 

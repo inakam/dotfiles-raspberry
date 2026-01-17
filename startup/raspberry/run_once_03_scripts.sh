@@ -49,14 +49,6 @@ else
   echo "✅ codex already installed."
 fi
 
-# task-masterのインストール
-if ! command -v task-master &> /dev/null; then
-  echo "📦 Installing task-master..."
-  npm install -g task-master-ai
-else
-  echo "✅ task-master already installed."
-fi
-
 # chezmoiのインストール
 if ! command -v chezmoi &> /dev/null; then
   echo "📦 Installing chezmoi..."

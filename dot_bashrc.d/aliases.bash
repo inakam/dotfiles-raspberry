@@ -15,7 +15,3 @@ alias bs="source ~/.bashrc"
 # codex
 alias cy="codex --yolo"
 alias cur="cursor-agent"
-
-# task-master
-alias tm="task-master"
-alias taskmaster="task-master"
