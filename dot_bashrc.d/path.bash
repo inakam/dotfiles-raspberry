@@ -1,3 +1,9 @@
+# snap
+export PATH="/snap/bin:$PATH"
+
+# local bin
+export PATH="$HOME/.local/bin:$PATH"
+
 # uv/cargo環境（存在する場合のみ）
 [ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
