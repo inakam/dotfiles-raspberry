@@ -1,0 +1,38 @@
+# Raspberry Pi用 apt-get パッケージリスト
+# インストールコマンド: sudo xargs -a ~/.config/apt/packages.list apt-get install -y
+
+# 開発ツール
+build-essential
+git
+curl
+wget
+vim
+neovim
+
+# ユーティリティ
+htop
+tmux
+tree
+ncdu
+ripgrep
+fzf
+bat
+
+# ネットワーク
+openssh-server
+tailscale
+
+# 画像・動画
+ffmpeg
+imagemagick
+
+# Python開発
+python3
+python3-dev
+python3-pip
+python3-venv
+
+# その他
+zip
+unzip
+xzip-utils
