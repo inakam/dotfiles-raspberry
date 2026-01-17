@@ -44,7 +44,7 @@ fi
 # codexのインストール
 if ! command -v codex &> /dev/null; then
   echo "📦 Installing codex..."
-  npm install -g @anthropic-ai/claude-code-explorer
+  npm install -g @openai/codex
 else
   echo "✅ codex already installed."
 fi
@@ -52,7 +52,7 @@ fi
 # task-masterのインストール
 if ! command -v task-master &> /dev/null; then
   echo "📦 Installing task-master..."
-  npm install -g @anthropic/task-master
+  npm install -g task-master-ai
 else
   echo "✅ task-master already installed."
 fi

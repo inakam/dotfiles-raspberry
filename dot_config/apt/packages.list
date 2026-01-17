@@ -8,26 +8,18 @@ gh
 jq
 curl
 wget
-vim
+vim-tiny
 geany
 
 # ユーティリティ
 htop
 tmux
 byobu
-tree
 ncdu
 lsof
 strace
 nano
 snapd
-
-# ファイル操作
-zip
-unzip
-xz-utils
-p7zip-full
-7zip
 
 # ネットワーク
 openssh-server
@@ -44,14 +36,12 @@ bluez
 bluez-firmware
 pulseaudio
 pulseaudio-module-bluetooth
-pipewire
 pipewire-pulse
 alsa-utils
 wireplumber
 
 # 画像・動画
 ffmpeg
-imagemagick
 v4l-utils
 
 # Python開発
@@ -72,3 +62,10 @@ python3-libcamera
 python3-sense-hat
 sense-hat
 libcamera-tools
+
+# ファイル操作
+zip
+unzip
+xz-utils
+p7zip-full
+7zip

@@ -20,11 +20,11 @@ chezmoi init --apply inakam
 ### インストールされるパッケージ（apt）
 
 #### 開発ツール
-- build-essential, git, gh, curl, wget
-- vim, geany
+- build-essential, git, gh, jq, curl, wget
+- vim-tiny, geany
 
 #### ユーティリティ
-- htop, tmux, byobu, tree, ncdu, lsof, strace, nano
+- htop, tmux, byobu, ncdu, lsof, strace, nano
 - snapd
 
 #### ファイル操作
@@ -38,10 +38,10 @@ chezmoi init --apply inakam
 #### Bluetooth/Sound
 - bluez, bluez-firmware
 - pulseaudio, pulseaudio-module-bluetooth
-- pipewire, pipewire-pulse, alsa-utils, wireplumber
+- pipewire-pulse, alsa-utils, wireplumber
 
 #### 画像・動画
-- ffmpeg, imagemagick, v4l-utils
+- ffmpeg, v4l-utils
 
 #### Python開発
 - python3, python3-dev, python3-pip, python3-venv
@@ -56,13 +56,13 @@ chezmoi init --apply inakam
 ### インストールされるツール（snap/npm）
 
 #### 経由: snap
-- **neovim**: エディタ
+- **neovim**: エディタ (v0.11.5)
 
 #### 経由: nvm + npm
 - **Node.js**: LTSバージョン
-- **claude-code**: Anthropic AIのCLIツール
-- **codex**: Claude Code Explorer
-- **task-master**: タスク管理ツール
+- **@anthropic-ai/claude-code**: Anthropic AIのCLIツール (v2.1.11)
+- **@openai/codex**: OpenAI Code Explorer (v0.46.0)
+- **task-master-ai**: タスク管理ツール (v0.29.0)
 
 ### エイリアス
 
