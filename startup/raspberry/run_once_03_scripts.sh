@@ -3,32 +3,18 @@
 
 set -eufo pipefail
 
-# neovim (snap)のインストール
-if ! command -v nvim &> /dev/null; then
-  echo "📦 Installing Neovim via snap..."
-  sudo snap install nvim --classic
+# miseのインストール
+if ! command -v mise &> /dev/null; then
+  echo "📦 Installing mise..."
+  curl https://mise.run | sh
 else
-  echo "✅ Neovim already installed."
+  echo "✅ mise already installed."
 fi
 
-# nvmのインストール
-if [ ! -d "$HOME/.nvm" ]; then
-  echo "📦 Installing nvm..."
-  curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.0/install.sh | bash
-  # nvmを有効化
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-else
-  echo "✅ nvm already installed."
-  export NVM_DIR="$HOME/.nvm"
-  [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-fi
-
-# Node.js (LTS)のインストール
+# Node.jsのインストール（mise経由）
 if ! command -v node &> /dev/null; then
-  echo "📦 Installing Node.js LTS..."
-  nvm install --lts
-  nvm use --lts
+  echo "📦 Installing Node.js via mise..."
+  mise install -y node@24.12
 else
   echo "✅ Node.js already installed."
 fi

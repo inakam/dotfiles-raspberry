@@ -1,6 +1,3 @@
-# snap
-export PATH="/snap/bin:$PATH"
-
 # local bin
 export PATH="$HOME/.local/bin:$PATH"
 

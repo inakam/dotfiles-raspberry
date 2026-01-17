@@ -16,16 +16,16 @@ chezmoi init --apply inakam
 - **bash**: メインシェル
 - **byobu**: ターミナルマルチプレクサ（.profileで自動起動）
 - **chezmoi**: ドットファイル管理
+- **mise**: ツールバージョン管理（Node.jsなど）
 
 ### インストールされるパッケージ（apt）
 
 #### 開発ツール
 - build-essential, git, gh, jq, curl, wget
-- vim-tiny, geany
+- vim-tiny, neovim, geany
 
 #### ユーティリティ
 - htop, tmux, byobu, ncdu, lsof, strace, nano
-- snapd
 
 #### ファイル操作
 - zip, unzip, xz-utils, p7zip-full, 7zip
@@ -53,13 +53,12 @@ chezmoi init --apply inakam
 - python3-libcamera, python3-sense-hat, sense-hat
 - libcamera-tools
 
-### インストールされるツール（snap/npm）
+### インストールされるツール（mise + npm）
 
-#### 経由: snap
-- **neovim**: エディタ (v0.11.5)
+#### 経由: mise
+- **Node.js**: v24.12
 
-#### 経由: nvm + npm
-- **Node.js**: LTSバージョン
+#### 経由: mise + npm
 - **@anthropic-ai/claude-code**: Anthropic AIのCLIツール (v2.1.11)
 - **@openai/codex**: OpenAI Code Explorer (v0.46.0)
 
@@ -119,14 +118,13 @@ chezmoi apply
 │   ├── claude.bash         # Claude Code関連
 │   ├── completion.bash     # 補完設定
 │   ├── history.bash        # 履歴設定
-│   ├── nvm.bash            # nvm設定
 │   └── path.bash           # PATH設定
 ├── dot_claude/             # Claude Code設定
 ├── dot_config/
 │   ├── apt/
 │   │   └── packages.list   # apt-getパッケージリスト
 │   └── mise/
-│       └── config.toml     # mise設定（オプション）
+│       └── config.toml     # mise設定
 └── startup/raspberry/      # 初回起動スクリプト
     ├── run_once_01_install_packages.sh
     ├── run_once_02_mise_install.sh
@@ -138,4 +136,3 @@ chezmoi apply
 以下のツールはインストールされている場合のみ有効になります：
 
 - **starship**: プロンプトのカスタマイズ（インストール方法: `curl -sS https://starship.rs/install.sh | sh`）
-- **mise**: ツールバージョン管理（インストール方法: `curl https://mise.run | sh`）

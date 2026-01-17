@@ -9,6 +9,7 @@ jq
 curl
 wget
 vim-tiny
+neovim
 geany
 
 # ユーティリティ
@@ -19,7 +20,6 @@ ncdu
 lsof
 strace
 nano
-snapd
 
 # ネットワーク
 openssh-server
