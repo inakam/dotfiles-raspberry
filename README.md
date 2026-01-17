@@ -83,14 +83,33 @@ chezmoi init --apply inakam
 
 ## Claude Code Plugin
 
-claude codeの中でpluginsをインストールします：
+### 公式プラグインのインストール
+
+claude codeの中で以下のコマンドを実行して公式プラグインをインストールします：
+
+```bash
+/plugin marketplace add anthropics/claude-code
+```
+
+### プラグインの有効化
+
+インストール後、プラグインを有効にするためにsettings.jsonを更新します：
+
+```bash
+/plugin install plugin-dev@anthropics/claude-code
+```
+
+### その他のプラグイン（オプション）
+
+必要に応じて追加のプラグインをインストールできます：
 
 ```bash
 /plugin marketplace add thedotmack/claude-mem
 /plugin marketplace add fumiya-kume/claude-code
 /plugin marketplace add OthmanAdi/planning-with-files
-/plugin marketplace add anthropics/skills
 ```
+
+注意: これらの追加プラグインを使用するには、`~/.claude/settings.json`の`enabledPlugins`セクションに追加する必要があります。
 
 ## 設定の変更
 
