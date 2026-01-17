@@ -1,0 +1,19 @@
+# ~/.bashrc.d/ 配下のファイルを読み込み
+if [ -d ~/.bashrc.d ]; then
+  for file in ~/.bashrc.d/*.bash; do
+    source "$file"
+  done
+fi
+
+# ローカル設定（マシン固有）
+[ -f ~/.bashrc.local ] && source ~/.bashrc.local
+
+# mise
+if command -v mise &> /dev/null; then
+  eval "$(mise activate bash)"
+fi
+
+# starship
+if command -v starship &> /dev/null; then
+  eval "$(starship init bash)"
+fi

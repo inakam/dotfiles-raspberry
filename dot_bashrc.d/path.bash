@@ -3,9 +3,10 @@
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
 # rbenv
-[[ -d ~/.rbenv  ]] && \
-  export PATH=${HOME}/.rbenv/bin:${PATH} && \
+if [ -d ~/.rbenv ]; then
+  export PATH=${HOME}/.rbenv/bin:${PATH}
   eval "$(rbenv init -)"
+fi
 
 # moonbit
 export PATH="$HOME/.moon/bin:$PATH"

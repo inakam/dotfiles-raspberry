@@ -9,5 +9,5 @@ alias capply="chezmoi apply"
 alias cdiff="chezmoi diff"
 alias cra="chezmoi git pull && chezmoi apply"
 
-# zsh
-alias zs="source ~/.zshrc"
+# bash
+alias bs="source ~/.bashrc"
